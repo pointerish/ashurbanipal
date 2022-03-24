@@ -19,7 +19,8 @@ defmodule Ashurbanipal.Application do
       Registry.child_spec(
         keys: :duplicate,
         name: Registry.Ashurbanipal
-      )
+      ),
+      Ashurbanipal.Scheduler
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

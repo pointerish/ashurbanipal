@@ -1,6 +1,5 @@
 defmodule Ashurbanipal.Router do
   use Plug.Router
-  require EEx
 
   plug Plug.Static,
     at: "/",
@@ -12,10 +11,8 @@ defmodule Ashurbanipal.Router do
     json_decoder: Jason
   plug :dispatch
 
-  EEx.function_from_file(:defp, :application_html, "lib/application.html.eex", [])
-
   get "/" do
-    send_resp(conn, 200, application_html())
+    send_resp(conn, 200, "hello")
   end
 
   match _ do
