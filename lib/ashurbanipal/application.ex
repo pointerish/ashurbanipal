@@ -20,6 +20,7 @@ defmodule Ashurbanipal.Application do
         keys: :duplicate,
         name: Registry.Ashurbanipal
       ),
+      Ashurbanipal.Stories,
       Ashurbanipal.Scheduler
     ]
 

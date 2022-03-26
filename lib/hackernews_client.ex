@@ -2,7 +2,6 @@ defmodule Ashurbanipal.HNClient do
   @moduledoc """
   A thin-wrapper that retrieves Hacker News top stories' data
   """
-  @hn_api_url "https://hacker-news.firebaseio.com/v0/topstories.json"
 
   @doc """
   It retrieves HN's top-stories data
@@ -26,7 +25,9 @@ defmodule Ashurbanipal.HNClient do
     end
   end
 
-  defp consume_hackernews_stories, do: HTTPoison.get(@hn_api_url)
+  defp consume_hackernews_stories do
+    HTTPoison.get("https://hacker-news.firebaseio.com/v0/topstories.json")
+  end
 
   defp consume_hackernews_story(story_id) do
     case HTTPoison.get("https://hacker-news.firebaseio.com/v0/item/#{story_id}.json") do

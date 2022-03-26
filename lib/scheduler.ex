@@ -1,5 +1,12 @@
 defmodule Ashurbanipal.Scheduler do
+  @moduledoc """
+  A GenServer to schedule the retrieval of HN Top stories
+  """
+
   use GenServer
+
+  alias Ashurbanipal.Stories
+  alias Ashurbanipal.HNClient
 
   @five_minutes_in_milliseconds 300_000
 
@@ -8,17 +15,18 @@ defmodule Ashurbanipal.Scheduler do
   end
 
   def init(state) do
+    stories = HNClient.get_stories_data()
+    GenServer.call(Stories, {:put, "stories", stories})
     schedule_work()
+
     {:ok, state}
   end
 
   def handle_info(:work, state) do
-    # Do the work you desire here
+    init(state)
     schedule_work()
     {:noreply, state}
   end
 
-  defp schedule_work() do
-    Process.send_after(self(), :work, @five_minutes_in_milliseconds)
-  end
+  defp schedule_work, do: Process.send_after(self(), :work, @five_minutes_in_milliseconds)
 end
