@@ -3,19 +3,18 @@ defmodule Ashurbanipal.Helpers do
   A module containing helper functions
   """
 
-  @spec parse_pagination_value(integer()) :: integer()
-  def parse_pagination_value(pagination_value)
-    when pagination_value <= 50 and rem(pagination_value, 10) == 0, do: pagination_value
+  def parse_pagination_value(:all), do: :all
 
-  def parse_pagination_value(_pagination_value), do: 50
+  def parse_pagination_value(pagination_value) when pagination_value <= 5, do: pagination_value
 
-  @spec parse_pagination_query(map()) :: integer()
-  def parse_pagination_query(%{}), do: 50
+  def parse_pagination_value(_pagination_value), do: :all
 
-  def parse_pagination_query(%{"paginate" => pagination_value}) do
+  def parse_pagination_query(%{"page" => pagination_value}) do
     case Integer.parse(pagination_value) do
       {parsed_value, _} -> parsed_value
-      :error -> 50
+      :error -> :all
     end
   end
+
+  def parse_pagination_query(%{}), do: :all
 end

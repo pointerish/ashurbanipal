@@ -14,7 +14,7 @@ defmodule Ashurbanipal.Router do
       Helpers.parse_pagination_query(conn.query_params)
       |> Helpers.parse_pagination_value()
 
-    stories = %{stories: GenServer.call(Ashurbanipal.Stories, {:get, "stories", pagination_value})}
+    stories = %{stories: GenServer.call(Ashurbanipal.Stories, {:get, pagination_value})}
 
     conn
     |> put_resp_header("content-type", "application/json; charset=utf-8")
