@@ -1,21 +1,19 @@
 # Ashurbanipal
 
-**TODO: Add description**
+[Ashurbanipal](https://en.wikipedia.org/wiki/Ashurbanipal) is an aggregator API that serves Hacker News' top 50 stories. It is built using Elixir/OTP and without using [Phoenix](https://www.phoenixframework.org/) or a database to store data. It uses ETS to store Hacker News' stories in memory.
 
-## Installation
+It was named after the last great Assyrian king who was fond of collection clay tablets in his library. He is the reason why we still have the [Epic of Gilgamesh](https://en.wikipedia.org/wiki/Epic_of_Gilgamesh).
 
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed
-by adding `ashurbanipal` to your list of dependencies in `mix.exs`:
+## Features
 
-```elixir
-def deps do
-  [
-    {:ashurbanipal, "~> 0.1.0"}
-  ]
-end
-```
+* JSON API over HTTP
+* WebSockets broadcasting
 
-Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
-and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
-be found at <https://hexdocs.pm/ashurbanipal>.
+## Usage
+
+If running directly without Docker, clone the repository and run the following command:
+
+`iex -S mix`
+
+
 
