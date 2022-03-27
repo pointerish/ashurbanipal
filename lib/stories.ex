@@ -31,12 +31,12 @@ defmodule Ashurbanipal.Stories do
   end
 
   def get(key) do
-    case :ets.lookup(:stories, key) do
+    case :ets.lookup(:stories, "stories") do
       [] ->
         nil
 
       [{_key, value}] ->
-        value
+        Map.get(value, key)
     end
   end
 
