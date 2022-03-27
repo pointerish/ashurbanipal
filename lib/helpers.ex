@@ -4,7 +4,8 @@ defmodule Ashurbanipal.Helpers do
   """
 
   @spec parse_pagination_value(integer()) :: integer()
-  def parse_pagination_value(pagination_value) when pagination_value <= 50 and rem(pagination_value, 10) == 0, do: pagination_value
+  def parse_pagination_value(pagination_value)
+    when pagination_value <= 50 and rem(pagination_value, 10) == 0, do: pagination_value
 
   def parse_pagination_value(_pagination_value), do: 50
 

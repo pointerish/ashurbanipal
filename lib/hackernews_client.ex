@@ -12,7 +12,17 @@ defmodule Ashurbanipal.HNClient do
       {:error, :hn_api_error} ->
         {:error, :hn_api_error}
       {:ok, ids} ->
-        ids |> Enum.take(50) |> build_stories_map()
+        stories =
+          ids
+          |> Enum.take(50)
+          |> Enum.chunk_every(10)
+          |> Enum.with_index(1)
+          |> Enum.reduce(%{}, fn {ids, pagination_index}, acc ->
+            stories = build_stories_map(ids)
+            Map.put_new(acc, pagination_index, stories)
+          end)
+
+        Map.put_new(stories, :all, merge_pages(stories))
     end
   end
 
@@ -49,5 +59,12 @@ defmodule Ashurbanipal.HNClient do
         Map.put_new(acc, id, story_data)
       end
     end)
+  end
+
+  defp merge_pages(stories) do
+    Map.merge(Map.get(stories, 1), Map.get(stories, 2))
+    |> Map.merge(Map.get(stories, 3))
+    |> Map.merge(Map.get(stories, 4))
+    |> Map.merge(Map.get(stories, 5))
   end
 end
