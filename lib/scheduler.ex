@@ -1,6 +1,6 @@
 defmodule Ashurbanipal.Scheduler do
   @moduledoc """
-  A GenServer to schedule the retrieval of HN Top stories
+  A GenServer to schedule the retrieval of HN Top stories every 5 minutes
   """
 
   use GenServer

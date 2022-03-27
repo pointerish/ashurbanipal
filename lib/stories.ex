@@ -30,7 +30,7 @@ defmodule Ashurbanipal.Stories do
     {:reply, put(key, value), state}
   end
 
-  def get(key) do
+  defp get(key) do
     case :ets.lookup(:stories, "stories") do
       [] ->
         nil
@@ -40,7 +40,7 @@ defmodule Ashurbanipal.Stories do
     end
   end
 
-  def put(key, value) do
+  defp put(key, value) do
     :ets.insert_new(:stories, {key, value})
   end
 end

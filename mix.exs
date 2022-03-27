@@ -27,7 +27,8 @@ defmodule Ashurbanipal.MixProject do
       {:plug_cowboy, "~> 2.5"},
       {:jason, "~> 1.3"},
       {:poison, "~> 5.0"},
-      {:httpoison, "~> 1.8"}
+      {:httpoison, "~> 1.8"},
+      {:ex_doc, "~> 0.28.3", only: :dev, runtime: false}
     ]
   end
 end
