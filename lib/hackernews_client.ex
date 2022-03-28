@@ -43,15 +43,17 @@ defmodule Ashurbanipal.HNClient do
 
   defp get_stories_ids do
     case consume_hackernews_stories() do
-      {:ok, %{body: body}} ->
+      {:ok, %{body: body, status_code: 200}} ->
         {:ok, Poison.decode!(body)}
+      {:ok, %{status_code: _status_code}} ->
+        {:error, :hn_api_error}
       {:error, _} ->
         {:error, :hn_api_error}
     end
   end
 
   defp consume_hackernews_stories do
-    HTTPoison.get("https://hacker-news.firebaseio.com/v0/topstories.json")
+    HTTPoison.get("https://hacker-news.firebaseio.com/12/topstories.json")
   end
 
   defp consume_hackernews_story(story_id) do

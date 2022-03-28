@@ -15,8 +15,7 @@ defmodule Ashurbanipal.Scheduler do
   end
 
   def init(state) do
-    stories = HNClient.get_stories_data()
-    GenServer.call(Stories, {:put, "stories", stories})
+    populate_ets_table()
     schedule_work()
 
     {:ok, state}
@@ -29,4 +28,13 @@ defmodule Ashurbanipal.Scheduler do
   end
 
   defp schedule_work, do: Process.send_after(self(), :work, @five_minutes_in_milliseconds)
+
+  defp populate_ets_table do
+    case HNClient.get_stories_data() do
+      {:error, :hn_api_error} ->
+        GenServer.call(Stories, {:put, "stories", nil})
+      stories ->
+        GenServer.call(Stories, {:put, "stories", stories})
+    end
+  end
 end
