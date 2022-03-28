@@ -3,10 +3,25 @@ defmodule Ashurbanipal.HNClient do
   A thin-wrapper that retrieves Hacker News top stories' data
   """
 
+  @typedoc """
+   A map containing Hacker News' stories data
+
+   Numbered keys are pagination index where each page contains 10 stories.
+   The :all atom key contains all stories.
+  """
+  @type hn_stories_map :: %{
+    1 => map(),
+    2 => map(),
+    3 => map(),
+    4 => map(),
+    5 => map(),
+    all: map()
+  }
+
   @doc """
   It retrieves HN's top-stories data
   """
-  @spec get_stories_data() :: {:ok, map()} | {:error, :hn_api_error}
+  @spec get_stories_data() :: hn_stories_map() | {:error, :hn_api_error}
   def get_stories_data do
     case get_stories_ids() do
       {:error, :hn_api_error} ->
