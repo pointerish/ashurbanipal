@@ -16,10 +16,6 @@ defmodule Ashurbanipal.Application do
           port: 4000
         ]
       ),
-      Registry.child_spec(
-        keys: :duplicate,
-        name: Registry.Ashurbanipal
-      ),
       Ashurbanipal.Stories,
       Ashurbanipal.Scheduler
     ]
