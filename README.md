@@ -14,6 +14,3 @@ It was named after the last great Assyrian king who was fond of collecting clay 
 If running directly without Docker, clone the repository and run the following command:
 
 `iex -S mix`
-
-
-
