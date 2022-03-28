@@ -20,13 +20,12 @@ defmodule Ashurbanipal.Router do
   end
 
   get "/stories/:story_id" do
-    stories = GenServer.call(Ashurbanipal.Stories, {:get, :all})
-    story_id_from_path = Helpers.parse_story_id_from_path(conn.path_params)
 
-    case Map.get(stories, story_id_from_path) do
-      nil -> send_resp(conn, 404, "Story Not Found")
-      story ->
-        send_json_response(conn, story)
+    case GenServer.call(Ashurbanipal.Stories, {:get, :all}) do
+      nil -> send_json_response(conn, nil)
+      stories ->
+        story_id_from_path = Helpers.parse_story_id_from_path(conn.path_params)
+        do_story_search(conn, stories, story_id_from_path)
     end
   end
 
@@ -38,5 +37,13 @@ defmodule Ashurbanipal.Router do
     conn
     |> put_resp_header("content-type", "application/json; charset=utf-8")
     |> send_resp(200, Poison.encode!(response_data))
+  end
+
+  defp do_story_search(conn, stories, story_id) do
+    case Map.get(stories, story_id) do
+      nil -> send_resp(conn, 404, "Story Not Found")
+      story ->
+        send_json_response(conn, story)
+    end
   end
 end
