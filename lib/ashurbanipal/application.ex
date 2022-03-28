@@ -30,7 +30,6 @@ defmodule Ashurbanipal.Application do
     [
       {:_,
         [
-          {"/ws/stories", Ashurbanipal.SocketHandler, []},
           {:_, Plug.Cowboy.Handler, {Ashurbanipal.Router, []}}
         ]
       }
