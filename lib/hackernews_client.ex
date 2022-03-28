@@ -21,9 +21,9 @@ defmodule Ashurbanipal.HNClient do
   @doc """
   It retrieves HN's top-stories data
   """
-  @spec get_stories_data() :: hn_stories_map() | {:error, :hn_api_error}
-  def get_stories_data do
-    case get_stories_ids() do
+  @spec get_stories_data(String.t()) :: hn_stories_map() | {:error, :hn_api_error}
+  def get_stories_data(source \\ "https://hacker-news.firebaseio.com/v0/topstories.json") do
+    case get_stories_ids(source) do
       {:error, :hn_api_error} ->
         {:error, :hn_api_error}
       {:ok, ids} ->
@@ -41,8 +41,8 @@ defmodule Ashurbanipal.HNClient do
     end
   end
 
-  defp get_stories_ids do
-    case consume_hackernews_stories() do
+  defp get_stories_ids(source) do
+    case consume_hackernews_stories(source) do
       {:ok, %{body: body, status_code: 200}} ->
         {:ok, Poison.decode!(body)}
       {:ok, %{status_code: _status_code}} ->
@@ -52,9 +52,7 @@ defmodule Ashurbanipal.HNClient do
     end
   end
 
-  defp consume_hackernews_stories do
-    HTTPoison.get("https://hacker-news.firebaseio.com/12/topstories.json")
-  end
+  defp consume_hackernews_stories(source), do: HTTPoison.get(source)
 
   defp consume_hackernews_story(story_id) do
     case HTTPoison.get("https://hacker-news.firebaseio.com/v0/item/#{story_id}.json") do
