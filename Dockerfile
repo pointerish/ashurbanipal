@@ -39,7 +39,7 @@ RUN chown nobody:nobody /app
 USER nobody:nobody
 
 RUN ls /app
-COPY --from=builder --chown=nobody:nobody /ashurbanipal/_build/prod/rel/ashurbanipal    ./
+COPY --from=builder --chown=nobody:nobody /app/_build/prod/rel/ashurbanipal    ./
 
 ENV LANG=C.UTF-8
 ENV HOME=/app
